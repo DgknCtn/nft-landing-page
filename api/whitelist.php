@@ -23,25 +23,23 @@ try {
         $data = json_decode(file_get_contents("php://input"));
         
         // Veri kontrolü
-        if (!isset($data->email) || !isset($data->wallet) || !isset($data->discord) || !isset($data->twitter)) {
+        if (!isset($data->wallet) || !isset($data->discord)) {
             throw new Exception('Missing required fields');
         }
 
-        // Email ve wallet kontrolü
-        $stmt = $conn->prepare('SELECT COUNT(*) FROM whitelist WHERE email = ? OR wallet = ?');
-        $stmt->execute([$data->email, $data->wallet]);
+        // Wallet kontrolü
+        $stmt = $conn->prepare('SELECT COUNT(*) FROM whitelist WHERE wallet = ?');
+        $stmt->execute([$data->wallet]);
         
         if ($stmt->fetchColumn() > 0) {
-            throw new Exception('Email or wallet already registered');
+            throw new Exception('Wallet already registered');
         }
 
         // Yeni kayıt
-        $stmt = $conn->prepare('INSERT INTO whitelist (email, wallet, discord, twitter, status, created_at) VALUES (?, ?, ?, ?, "pending", NOW())');
+        $stmt = $conn->prepare('INSERT INTO whitelist (wallet, discord, status, created_at) VALUES (?, ?, "pending", NOW())');
         $stmt->execute([
-            $data->email,
             $data->wallet,
-            $data->discord,
-            $data->twitter
+            $data->discord
         ]);
 
         echo json_encode(['success' => true, 'message' => 'Successfully registered for whitelist']);

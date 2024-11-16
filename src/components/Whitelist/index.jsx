@@ -3,10 +3,8 @@ import { toast } from 'react-hot-toast';
 
 const Whitelist = () => {
   const [formData, setFormData] = useState({
-    email: '',
     wallet: '',
-    discord: '',
-    twitter: ''
+    discord: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -23,7 +21,7 @@ const Whitelist = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://joinvanth.com/api/whitelist.php', {
+      const response = await fetch('https://sizinsite.com/api/whitelist.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,10 +41,8 @@ const Whitelist = () => {
       toast.success('Successfully registered for whitelist!');
 
       setFormData({
-        email: '',
         wallet: '',
-        discord: '',
-        twitter: ''
+        discord: ''
       });
 
     } catch (error) {
@@ -70,19 +66,6 @@ const Whitelist = () => {
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-black/70 rounded-lg focus:ring-2 focus:ring-accent outline-none"
-                placeholder="your@email.com"
-                required
-              />
-            </div>
-
-            <div>
               <label className="block text-sm font-medium mb-2">Wallet Address</label>
               <input
                 type="text"
@@ -104,19 +87,6 @@ const Whitelist = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-black/70 rounded-lg focus:ring-2 focus:ring-accent outline-none"
                 placeholder="username#0000"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Twitter Username</label>
-              <input
-                type="text"
-                name="twitter"
-                value={formData.twitter}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-black/70 rounded-lg focus:ring-2 focus:ring-accent outline-none"
-                placeholder="@username"
                 required
               />
             </div>
